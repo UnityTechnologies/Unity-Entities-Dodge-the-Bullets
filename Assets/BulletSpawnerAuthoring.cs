@@ -9,6 +9,8 @@ public class BulletSpawnerAuthoring : MonoBehaviour
     public float timeBetSpawnMin = 0.2f;
     public float timeBetSpawnMax = 3f;
     public float spawnRadius = 10f;
+    public float bulletSpeedMin = 1f;
+    public float bulletSpeedMax = 8f;
     
     private class Baker : Baker<BulletSpawnerAuthoring> {
         public override void Bake(BulletSpawnerAuthoring authoring)
@@ -21,6 +23,8 @@ public class BulletSpawnerAuthoring : MonoBehaviour
                 TimeBetSpawnMax = authoring.timeBetSpawnMax,
                 TimeBetSpawnMin = authoring.timeBetSpawnMin,
                 SpawnPositionRadius = authoring.spawnRadius,
+                BulletSpeedMin = authoring.bulletSpeedMin,
+                BulletSpeedMax = authoring.bulletSpeedMax,
             });
         }
     }
@@ -35,4 +39,6 @@ public partial struct BulletSpawner : IComponentData
     public float TimeBetSpawnMin;
     public float TimeBetSpawnMax;
     public float NextSpawnTime;
+    public float BulletSpeedMin;
+    public float BulletSpeedMax;
 }

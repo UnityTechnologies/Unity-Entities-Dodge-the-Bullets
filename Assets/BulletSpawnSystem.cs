@@ -48,7 +48,8 @@ public partial struct BulletSpawnSystem : ISystem
                 state.EntityManager.SetComponentData(bulletEntity, localTransform);
                 state.EntityManager.SetComponentData(bulletEntity, new Movement
                 {
-                    Velocity = math.normalizesafe(aimPoint - randomPosition) * 5f
+                    Velocity = math.normalizesafe(aimPoint - randomPosition)
+                               * _random.NextFloat(bulletSpawner.BulletSpeedMin, bulletSpawner.BulletSpeedMax)
                 });
 
                 bulletSpawner.NextSpawnTime = (float)SystemAPI.Time.ElapsedTime

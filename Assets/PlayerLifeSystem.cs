@@ -7,14 +7,26 @@ using Unity.Transforms;
 [BurstCompile]
 public partial struct PlayerLifeSystem : ISystem
 {
+    public void OnCreate(ref SystemState state)
+    {
+        state.RequireForUpdate<GameState>();
+    }
+
     public void OnUpdate(ref SystemState state)
     {
+        var gameState = SystemAPI.GetSingleton<GameState>();
+
+        if (gameState.IsGameOver)
+        {
+            return;
+        }
+        var playerCount = 0;
         foreach (var (playerTransform, playerEntity)
                  in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Player>().WithEntityAccess())
         {
+            playerCount++;
             var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged);
-
             
             foreach (var bulletTransform in SystemAPI.Query<RefRO<LocalTransform>>().WithAll<Bullet>())
             {
@@ -27,6 +39,12 @@ public partial struct PlayerLifeSystem : ISystem
                     ecb.AddComponent<DisableRendering>(playerEntity);
                 }
             }
+        }
+
+        if (playerCount == 0)
+        {
+            gameState.IsGameOver = true;
+            SystemAPI.SetSingleton(gameState);
         }
     }
 }
