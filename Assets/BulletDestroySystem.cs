@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-[UpdateAfter(typeof(VelocitySystem))]
+[UpdateAfter(typeof(BulletVelocitySystem))]
 public partial struct BulletDestroySystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -26,7 +26,7 @@ public partial struct BulletDestroySystem : ISystem
                      .WithAll<Bullet>()
                      .WithEntityAccess())
         {
-            if (math.abs(transform.ValueRO.Position.x) > 20 || math.abs(transform.ValueRO.Position.z) > 20 )
+            if (math.abs(transform.ValueRO.Position.x) > 40 || math.abs(transform.ValueRO.Position.z) > 40 )
             {
                 // Making a structural change would invalidate the query we are iterating through,
                 // so instead we record a command to destroy the entity later.
