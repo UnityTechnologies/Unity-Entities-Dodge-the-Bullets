@@ -3,8 +3,7 @@ using Unity.Entities;
 
 public partial class GameManagerSystem : SystemBase
 {
-    public Action<float> OnGameOver;
-    private bool isGameover;
+    public Action<double> OnGameOver;
 
     protected override void OnCreate()
     {
@@ -14,17 +13,20 @@ public partial class GameManagerSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        if (isGameover)
+        var gameState = SystemAPI.GetSingleton<GameState>();
+        
+        if (gameState.IsGameOver || !gameState.IsGameRunning) 
         {
             return;
         }
-
-        var gameState = SystemAPI.GetSingleton<GameState>();
-
-        if (gameState.IsGameOver)
+        
+        if(gameState.PlayerCount == 0)
         {
-            isGameover = true;
-            OnGameOver?.Invoke((float)SystemAPI.Time.ElapsedTime);
+            gameState.IsGameOver = true;
+            gameState.IsGameRunning = false;
+            gameState.FinishTime = SystemAPI.Time.ElapsedTime;
+            SystemAPI.SetSingleton(gameState);
+            OnGameOver?.Invoke(gameState.FinishTime);
         }
     }
 }

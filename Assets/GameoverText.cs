@@ -15,7 +15,8 @@ public class GameoverText : MonoBehaviour
             World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<GameManagerSystem>();
         gameManagerSystem.OnGameOver += Show;
     }
-    public void Show(float time)
+
+    private void Show(double time)
     {
         _text.text = $"Game Over\nTime: {time:F2}";
     }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
@@ -15,8 +13,10 @@ public class GameStateAuthoring : MonoBehaviour
     }
 }
 
-
 public partial struct GameState : IComponentData
 {
+    public double FinishTime;
+    public bool IsGameRunning;
     public bool IsGameOver;
+    public int PlayerCount;
 }
