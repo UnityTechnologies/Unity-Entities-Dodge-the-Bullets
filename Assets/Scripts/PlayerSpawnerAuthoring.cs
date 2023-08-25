@@ -1,12 +1,12 @@
 using Unity.Entities;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerSpawnerAuthoring : MonoBehaviour
 {
     public GameObject playerPrefab;
-    public float spawnRadius = 2f;
-    public int spawnCount = 100;
+    public int playerCountInRow = 10;
+    public int playerCountInColumn = 10;
+    public float offset = 0.25f;
 
     private class Baker : Baker<PlayerSpawnerAuthoring>
     {
@@ -16,8 +16,9 @@ public class PlayerSpawnerAuthoring : MonoBehaviour
             AddComponent(entity, new PlayerSpawner
             {
                 PlayerPrefab = GetEntity(authoring.playerPrefab, TransformUsageFlags.Dynamic),
-                SpawnRadius = authoring.spawnRadius,
-                SpawnCount = authoring.spawnCount,
+                PlayerCountInRow = authoring.playerCountInRow,
+                PlayerCountInColumn = authoring.playerCountInColumn,
+                Offset = authoring.offset,
             });
         }
     }
@@ -26,6 +27,7 @@ public class PlayerSpawnerAuthoring : MonoBehaviour
 public struct PlayerSpawner : IComponentData
 {
     public Entity PlayerPrefab;
-    public float SpawnRadius;
-    public int SpawnCount;
+    public int PlayerCountInRow;
+    public int PlayerCountInColumn;
+    public float Offset;
 }

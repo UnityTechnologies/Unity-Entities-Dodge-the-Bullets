@@ -6,14 +6,10 @@ using Unity.Transforms;
 [StructLayout(LayoutKind.Auto)]
 public partial struct PlayerSpawnSystem : ISystem
 {
-    private Random _random;
-    
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<GameState>();
         state.RequireForUpdate<PlayerSpawner>();
-
-        _random = new Random(1);
     }
 
     public void OnUpdate(ref SystemState state)
@@ -25,23 +21,25 @@ public partial struct PlayerSpawnSystem : ISystem
         var gameState = SystemAPI.GetSingleton<GameState>();
         
         var playerSpawner = SystemAPI.GetSingleton<PlayerSpawner>();
-        var spawnCount = playerSpawner.SpawnCount;
-        var spawnRadius = playerSpawner.SpawnRadius;
+        var rowCount = playerSpawner.PlayerCountInRow;
+        var colCount = playerSpawner.PlayerCountInColumn;
+        var offset = playerSpawner.Offset;
+
+        var startPosition = new float3(0, 0, 0);
         
-        // spawn Player in random position inside radius
-        for (var i = 0; i < spawnCount; i++)
+        // spawn Players
+        for (var i = 0; i < rowCount; i++)
         {
-            var playerEntity = state.EntityManager.Instantiate(playerSpawner.PlayerPrefab);
-            // Get Local Transform of playerEntity
-            var localTransform = SystemAPI.GetComponent<LocalTransform>(playerEntity);
-            var randomPosition = _random.NextFloat2Direction() * _random.NextFloat(0, spawnRadius);
-            localTransform.Position = new float3(randomPosition.x, 0, randomPosition.y);
-            
-            state.EntityManager.SetComponentData(playerEntity, localTransform);
-
-            gameState.PlayerCount++;
+            for (var j = 0; j < colCount; j++)
+            {
+                var playerEntity = state.EntityManager.Instantiate(playerSpawner.PlayerPrefab);
+                // Get Local Transform of playerEntity
+                var localTransform = SystemAPI.GetComponent<LocalTransform>(playerEntity);
+                localTransform.Position = startPosition + new float3(i * offset, 0, j * offset);
+                state.EntityManager.SetComponentData(playerEntity, localTransform);
+                gameState.PlayerCount++;
+            }
         }
-
         gameState.IsGameRunning = true;
         
         // set GameState

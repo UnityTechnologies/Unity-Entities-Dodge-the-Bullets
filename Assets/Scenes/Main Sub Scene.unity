@@ -194,8 +194,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 2169543563852853232, guid: 18061c9c540d549f69a1fbbef9f87dd5,
     type: 3}
-  spawnRadius: 2
-  spawnCount: 100
+  playerCountInRow: 10
+  playerCountInColumn: 10
+  offset: 0.25
 --- !u!4 &538927205
 Transform:
   m_ObjectHideFlags: 0
