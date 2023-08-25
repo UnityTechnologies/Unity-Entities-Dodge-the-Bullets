@@ -1,6 +1,5 @@
 using Unity.Entities;
 using UnityEngine;
-using Random = Unity.Mathematics.Random;
 
 public class BulletSpawnerAuthoring : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class BulletSpawnerAuthoring : MonoBehaviour
     public float timeBetSpawnMin = 0.2f;
     public float timeBetSpawnMax = 3f;
     public float spawnRadius = 10f;
-    public float bulletSpeedMin = 1f;
+    public float bulletSpeedMin = 2f;
     public float bulletSpeedMax = 8f;
     
     private class Baker : Baker<BulletSpawnerAuthoring> {

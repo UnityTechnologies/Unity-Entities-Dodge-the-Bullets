@@ -1,9 +1,8 @@
-
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class BulletAuthoring : MonoBehaviour 
+public class BulletAuthoring : MonoBehaviour
 {
     private class Baker : Baker<BulletAuthoring>
     {
@@ -13,7 +12,7 @@ public class BulletAuthoring : MonoBehaviour
             AddComponent<Bullet>(entity);
             AddComponent<Movement>(entity);
         }
-    } 
+    }
 }
 
 public partial struct Movement : IComponentData

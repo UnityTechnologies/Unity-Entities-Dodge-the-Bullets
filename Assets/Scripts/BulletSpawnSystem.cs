@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -5,6 +6,7 @@ using Unity.Transforms;
 
 [BurstCompile]
 [UpdateBefore(typeof(TransformSystemGroup))]
+[StructLayout(LayoutKind.Auto)]
 public partial struct BulletSpawnSystem : ISystem
 {
     private Random _random;

@@ -242,11 +242,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2647105497707921412, guid: b4cc641e151004d63a1aa04815bbf1cf,
     type: 3}
-  maxConcurrentSpawnCount: 5
-  timeBetSpawnMin: 0.2
+  maxConcurrentSpawnCount: 3
+  timeBetSpawnMin: 0.5
   timeBetSpawnMax: 3
   spawnRadius: 20
-  bulletSpeedMin: 1
+  bulletSpeedMin: 2
   bulletSpeedMax: 8
 --- !u!4 &1729111625
 Transform:
