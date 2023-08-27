@@ -17,8 +17,10 @@ public partial struct BulletVelocitySystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var otherBulletQuery = SystemAPI.QueryBuilder().WithAll<LocalTransform, Bullet>().Build();
-        var otherBulletTransforms = otherBulletQuery.ToComponentDataArray<LocalTransform>(state.WorldUpdateAllocator);
-        var otherBulletEntities = otherBulletQuery.ToEntityArray(state.WorldUpdateAllocator);
+        var otherBulletTransforms
+            = otherBulletQuery.ToComponentDataArray<LocalTransform>(state.WorldUpdateAllocator);
+        var otherBulletEntities 
+            = otherBulletQuery.ToEntityArray(state.WorldUpdateAllocator);
         
         var deltaTime = SystemAPI.Time.DeltaTime;
         

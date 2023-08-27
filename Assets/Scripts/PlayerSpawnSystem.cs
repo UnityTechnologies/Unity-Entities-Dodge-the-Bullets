@@ -1,9 +1,8 @@
-using System.Runtime.InteropServices;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-[StructLayout(LayoutKind.Auto)]
+[UpdateBefore(typeof(TransformSystemGroup))]
 public partial struct PlayerSpawnSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -14,10 +13,8 @@ public partial struct PlayerSpawnSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        // call only once
         state.Enabled = false;
         
-        // get GameState
         var gameState = SystemAPI.GetSingleton<GameState>();
         
         var playerSpawner = SystemAPI.GetSingleton<PlayerSpawner>();
@@ -27,13 +24,11 @@ public partial struct PlayerSpawnSystem : ISystem
 
         var startPosition = new float3(0, 0, 0);
         
-        // spawn Players
         for (var i = 0; i < rowCount; i++)
         {
             for (var j = 0; j < colCount; j++)
             {
                 var playerEntity = state.EntityManager.Instantiate(playerSpawner.PlayerPrefab);
-                // Get Local Transform of playerEntity
                 var localTransform = SystemAPI.GetComponent<LocalTransform>(playerEntity);
                 localTransform.Position = startPosition + new float3(i * offset, 0, j * offset);
                 state.EntityManager.SetComponentData(playerEntity, localTransform);
@@ -42,7 +37,6 @@ public partial struct PlayerSpawnSystem : ISystem
         }
         gameState.IsGameRunning = true;
         
-        // set GameState
         SystemAPI.SetSingleton(gameState);
     }
 }

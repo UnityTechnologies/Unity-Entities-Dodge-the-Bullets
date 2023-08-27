@@ -14,19 +14,24 @@ public partial class GameManagerSystem : SystemBase
     protected override void OnUpdate()
     {
         var gameState = SystemAPI.GetSingleton<GameState>();
-        
-        if (gameState.IsGameOver || !gameState.IsGameRunning) 
+        var elapsedTime = SystemAPI.Time.ElapsedTime;
+
+        if (!gameState.IsGameRunning)
         {
             return;
         }
         
-        if(gameState.PlayerCount == 0)
+        if (gameState.IsGameOver) 
+        {
+            return;
+        }
+        
+        if (gameState.PlayerCount == 0)
         {
             gameState.IsGameOver = true;
             gameState.IsGameRunning = false;
-            gameState.FinishTime = SystemAPI.Time.ElapsedTime;
             SystemAPI.SetSingleton(gameState);
-            OnGameOver?.Invoke(gameState.FinishTime);
+            OnGameOver?.Invoke(elapsedTime);
         }
     }
 }

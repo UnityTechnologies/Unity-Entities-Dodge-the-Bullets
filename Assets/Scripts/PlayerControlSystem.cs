@@ -9,6 +9,7 @@ public partial struct PlayerControlSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
+        state.RequireForUpdate<Player>();
     }
     
     [BurstCompile]
@@ -17,11 +18,18 @@ public partial struct PlayerControlSystem : ISystem
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
         
+        // job version
         new PlayerControlJob
         {
             HorizontalInput = horizontalInput,
             VerticalInput = verticalInput,
         }.ScheduleParallel();
+        
+        // non job version
+        // foreach (var (movement, player) in SystemAPI.Query<RefRW<Movement>, RefRO<Player>>().WithAll<Player>())
+        // {
+        //     movement.ValueRW.Velocity = new float3(horizontalInput, 0, verticalInput) * player.ValueRO.Speed;
+        // }
     }
 }
 

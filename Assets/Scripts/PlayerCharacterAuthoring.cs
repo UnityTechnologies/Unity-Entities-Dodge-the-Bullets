@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
@@ -17,7 +15,7 @@ public class PlayerCharacterAuthoring : MonoBehaviour
     }
 }
 
-public partial struct Player : IEnableableComponent, IComponentData
+public struct Player : IEnableableComponent, IComponentData
 {
     public float Speed;
 }
