@@ -2,6 +2,8 @@
 
 ![thumbnail](./thumbnail.png)
 
+* Version : Unity 2023.2b6
+
 ## 한국어 (Korean)
 이 저장소는 ECS를 사용해서 닷지(총알 피하기) 게임을 구현한 예제 입니다.
 붉은 총알을 피해 최대한 오래 살아남으세요!
