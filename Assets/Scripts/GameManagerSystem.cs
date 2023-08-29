@@ -3,7 +3,8 @@ using Unity.Entities;
 
 public partial class GameManagerSystem : SystemBase
 {
-    public Action<double> OnGameOver;
+    public Action OnGameOver = () => { };
+    public Action<double> OnTimeUpdate = _ => { };
 
     protected override void OnCreate()
     {
@@ -20,6 +21,8 @@ public partial class GameManagerSystem : SystemBase
         {
             return;
         }
+
+        OnTimeUpdate(elapsedTime);
         
         if (gameState.IsGameOver) 
         {
@@ -31,7 +34,7 @@ public partial class GameManagerSystem : SystemBase
             gameState.IsGameOver = true;
             gameState.IsGameRunning = false;
             SystemAPI.SetSingleton(gameState);
-            OnGameOver?.Invoke(elapsedTime);
+            OnGameOver.Invoke();
         }
     }
 }
