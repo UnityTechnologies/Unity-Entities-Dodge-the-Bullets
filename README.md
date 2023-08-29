@@ -24,6 +24,6 @@ In this example, you will learn the following steps
 
 * How to bake a GameObject into an Entity.
 * How to use the Entity Command Buffer
-* How to implement bullet bounce.
+* How to implement bullet bounce(Richocet)
 * How to exchange information between MonoBehaviour and the entity system.
 * How to control entities with jobs via IJobEntity
