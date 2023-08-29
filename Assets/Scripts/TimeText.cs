@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using Unity.Entities;
 using UnityEngine;
@@ -10,7 +8,6 @@ public class TimeText : MonoBehaviour
     void Start()
     {
         _text = GetComponent<TMP_Text>();
-        _text.enabled = false;
         // use GetExistingSystemManaged to get the system instance
         var gameManagerSystem =
             World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<GameManagerSystem>();
